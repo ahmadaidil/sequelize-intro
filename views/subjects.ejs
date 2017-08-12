@@ -10,11 +10,17 @@
       <thead>
         <th>Subject Id</th>
         <th>Subject Name</th>
+        <th>Teachers</th>
       </thead>
       <% data.forEach(d=>{ %>
       <tbody>
         <td><%= d.id %></td>
         <td><%= d.subject_name %></td>
+        <td><ol>
+          <% d.teachers.forEach(dT=>{ %>
+          <li><%= `${dT.first_name} ${dT.last_name}` %></li>
+          <% }) %>
+        </ol></td>
       </tbody>
       <% }) %>
     </table>

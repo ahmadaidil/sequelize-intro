@@ -5,7 +5,25 @@ const model = require('../models')
 router.get('/', (req, res)=>{
   model.teacher.findAll({order: [['id', 'ASC']]})
     .then(teachers=>{
-      res.render('teachers', {data:teachers});
+      //res.render('teachers', {data:teachers});
+      let promises = teachers.map(teacher=>{
+        return new Promise((resolve, reject)=>{
+          teacher.getSubject()
+            .then(subject=>{
+              if(teacher.subjectId != null){
+                teacher['subject'] = subject.subject_name;
+              }
+              return resolve(teacher);
+            })
+        })
+      })
+      Promise.all(promises)
+        .then(teachers=>{
+          res.render('teachers', {data: teachers});
+        })
+        .catch(err=>{
+          res.send(err.toString());
+        })
     })
     .catch(err=>{
       res.send(err.toString());
