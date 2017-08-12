@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Teacher</title>
+  </head>
+  <body>
+    <h1>Edit Teacher</h1>
+    <form class="" action="/teachers/edit/<%= dataTeacher.id %>" method="post">
+      <input type="text" name="first_name" placeholder="First Name" value="<%= dataTeacher.first_name %>"><br>
+      <input type="text" name="last_name" placeholder="Last Name" value="<%= dataTeacher.last_name %>"><br>
+      <input type="text" name="email" placeholder="Email" value="<%= dataTeacher.email %>"><br>
+      <select class="" name="subjectId">
+        <% for(let i=0; i<dataSubjects.length; i++){ %>
+          <% if(dataTeacher.subjectId == dataSubjects[i].id) { %>
+            <option value="<%=dataSubjects[i].id %>" selected><%= dataSubjects[i].subject_name %></option>
+          <% }else{ %>
+            <option value="<%= dataSubjects[i].id %>"><%= dataSubjects[i].subject_name %></option>
+          <% }} %>
+      </select><br><br>
+      <input type="submit" name="Submit" value="Submit">
+    </form>
+  </body>
+</html>

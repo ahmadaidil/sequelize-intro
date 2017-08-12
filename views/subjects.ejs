@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Subjects Data</title>
+  </head>
+  <body>
+    <h1>Subjects Data</h1>
+    <table border="1">
+      <thead>
+        <th>Subject Id</th>
+        <th>Subject Name</th>
+      </thead>
+      <% data.forEach(d=>{ %>
+      <tbody>
+        <td><%= d.id %></td>
+        <td><%= d.subject_name %></td>
+      </tbody>
+      <% }) %>
+    </table>
+  </body>
+</html>
