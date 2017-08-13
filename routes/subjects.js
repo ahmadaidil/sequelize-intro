@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const model = require('../models')
+const model = require('../models');
+const letterScore = require('../helpers/letterScore');
 
 router.get('/', (req, res)=>{
   model.subject.findAll({order: [['id', 'ASC']]})
@@ -85,6 +86,9 @@ router.get('/:id/enrolledstudents', (req, res)=>{
     .then(subject=>{
       subject.getStudents({order: [['first_name', 'ASC']]})
         .then(students=>{
+          students.forEach(s=>{
+            s['letterScore'] = letterScore(s.students_subject.score);
+          })
           res.render('enroll-students', {subject:subject, students:students, title:`${subject.subject_name}`});
         })
         .catch(err=>{

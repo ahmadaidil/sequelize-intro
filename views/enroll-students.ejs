@@ -4,18 +4,20 @@
       <thead>
         <th>No.</th>
         <th>Name</th>
-        <th>Score</th>
+        <th>Score by number</th>
+        <th>Score by letter</th>
       </thead>
       <% let index = 1 %>
       <% students.forEach(student=>{ %>
       <tbody>
         <td><%= index %></td>
         <td><%= student.full_name %></td>
-        <td><% if (student.students_subject.score != null) { %>
-          <%= student.students_subject.score %>
+        <% if (student.students_subject.score != null) { %>
+          <td><%= student.students_subject.score %></td>
         <% } else { %>
-          <a href="/subjects/<%= student.students_subject.subjectId %>/givescore/<%= student.id %>">Give Score</a>
-        <% } %></td>
+          <td><a href="/subjects/<%= student.students_subject.subjectId %>/givescore/<%= student.id %>">Give Score</a></td>
+        <% } %>
+        <td><%= student.letterScore %></td>
       </tbody>
       <% index++ }) %>
     </table>
