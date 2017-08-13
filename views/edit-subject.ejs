@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Edit Subject</title>
-  </head>
-  <body>
-    <h1>Edit Subject</h1>
+<%- include layout/head %>
     <form class="" action="/subjects/edit/<%=subject.id%>" method="post">
       <input type="text" name="subject_name" placeholder="Subject Name" value="<%= subject.subject_name %>"><br><br>
       <input type="submit" name="Submit" value="Submit">
     </form>
-  </body>
-</html>
+<%- include layout/foot %>

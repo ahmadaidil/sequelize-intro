@@ -19,7 +19,7 @@ router.get('/', (req, res)=>{
       })
       Promise.all(promises)
         .then(teachers=>{
-          res.render('teachers', {data: teachers});
+          res.render('teachers', {data: teachers, title:'All Teachers Data'});
         })
         .catch(err=>{
           res.send(err.toString());
@@ -33,7 +33,7 @@ router.get('/', (req, res)=>{
 router.get('/add', (req, res)=>{
   model.subject.findAll()
     .then(subjects=>{
-      res.render('add-teacher', {err:false, dataSubjects:subjects});
+      res.render('add-teacher', {err:false, dataSubjects:subjects, title:'Add New Teacher'});
     })
     .catch(err=>{
       res.send(err.toString());
@@ -51,7 +51,7 @@ router.post('/add', (req, res)=>{
   }).catch(err=>{
     model.subject.findAll()
       .then(subjects=>{
-        res.render('add-teacher', {dataSubjects:subjects,err:err, errmsg:'Email is already used'});
+        res.render('add-teacher', {dataSubjects:subjects, err:err, errmsg:'Email is already used', title:'Add New Teacher'});
       })
       .catch(err=>{
         res.send(err.toString());
@@ -64,7 +64,7 @@ router.get('/edit/:id', (req, res)=>{
     .then(teacher=>{
       model.subject.findAll()
         .then(subjects=>{
-          res.render('edit-teacher', {dataTeacher:teacher, dataSubjects:subjects});
+          res.render('edit-teacher', {dataTeacher:teacher, dataSubjects:subjects, title:'Edit Teacher Data'});
         })
         .catch(err=>{
           res.send(err.toString());

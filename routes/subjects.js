@@ -21,7 +21,7 @@ router.get('/', (req, res)=>{
       })
       Promise.all(promises)
         .then(subjects=>{
-          res.render('subjects', {data:subjects});
+          res.render('subjects', {data:subjects, title:'All Subjects Data'});
         })
         .catch(err=>{
           res.send(err.toString());
@@ -33,7 +33,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/add', (req, res)=>{
-  res.render('add-subject');
+  res.render('add-subject', {title:'Add New Subject'});
 });
 
 router.post('/add', (req, res)=>{
@@ -51,7 +51,7 @@ router.post('/add', (req, res)=>{
 router.get('/edit/:id', (req, res)=>{
   model.subject.findById(req.params.id)
     .then(subject=>{
-      res.render('edit-subject', {subject:subject});
+      res.render('edit-subject', {subject:subject, title:`Edit Subject ${subject.subject_name}`});
     })
     .catch(err=>{
       res.send(err.toString());

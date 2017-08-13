@@ -5,7 +5,7 @@ const model = require('../models')
 router.get('/', (req, res)=>{
   model.student.findAll({order: [['first_name', 'ASC']]})
     .then(students=>{
-      res.render('students', {data:students});
+      res.render('students', {data:students, title:'All Students Data'});
     })
     .catch(err=>{
       res.send(err.toString());
@@ -13,7 +13,7 @@ router.get('/', (req, res)=>{
 });
 
 router.get('/add', (req, res)=>{
-  res.render('add-student', {err:false});
+  res.render('add-student', {err:false, title:'Add New Student'});
 });
 
 router.post('/add', (req, res)=>{
@@ -25,14 +25,14 @@ router.post('/add', (req, res)=>{
   }).then(task=>{
     res.redirect('/students');
   }).catch(err=>{
-    res.render('add-student', {err:err, errmsg:'Email is already used'});
+    res.render('add-student', {err:err, errmsg:'Email is already used', title:'Add Student'});
   })
 });
 
 router.get('/edit/:id', (req, res)=>{
   model.student.findById(req.params.id)
     .then(student=>{
-      res.render('edit-student', {dS:student});
+      res.render('edit-student', {dS:student, title:'Edit Student Data'});
     })
     .catch(err=>{
       res.send(err.toString());
@@ -68,7 +68,7 @@ router.get('/:id/addsubject', (req, res)=>{
     .then(student=>{
       model.subject.findAll()
         .then(subjects=>{
-          res.render('add-studentSubject', {dataStudent:student, dataSS:subjects});
+          res.render('add-studentSubject', {dataStudent:student, dataSS:subjects, title:`Add New Subject to ${student.full_name}`});
         })
         .catch(err=>{
           res.send(err.toString());
