@@ -2,7 +2,10 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    return queryInterface.addColumn('teachers', 'email', Sequelize.STRING);
+    return queryInterface.addColumn('teachers', 'email', {
+      type: Sequelize.STRING,
+      unique: true
+    });
   },
 
   down: function (queryInterface, Sequelize) {

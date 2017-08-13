@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
 
   subject.associate = models=>{
     subject.hasMany(models.teacher, {foreignKey: 'subjectId'});
+    subject.belongsToMany(models.student, {through: models.students_subject})
   }
 
   return subject;

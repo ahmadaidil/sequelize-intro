@@ -2,22 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Add Teacher</title>
+    <title>Add Student</title>
   </head>
   <body>
-    <h1>Add Teacher</h1>
+    <h1>Add Student</h1>
     <% if(err){ %>
     <h4 style="color:red"><%= `${errmsg}! (${err.toString()})` %></h4>
     <% } %>
-    <form class="" action="/teachers/add" method="post">
+    <form class="" action="/students/add" method="post">
       <input type="text" name="first_name" placeholder="First Name"><br>
       <input type="text" name="last_name" placeholder="Last Name"><br>
-      <input type="text" name="email" placeholder="Email"><br>
-      <select name="subjectId">
-        <% dataSubjects.forEach(dS=>{ %>
-        <option value="<%=dS.id%>"><%=dS.subject_name%></option>
-        <% }) %>
-      </select><br><br>
+      <input type="text" name="email" placeholder="Email"><br><br>
       <input type="submit" name="Submit" value="Submit">
     </form>
   </body>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <a href="/subjects">return to subject list</a><br><br>
+    <table border="1">
+      <thead>
+        <th>No.</th>
+        <th>Name</th>
+        <th>Score</th>
+      </thead>
+      <% let index = 1 %>
+      <% students.forEach(student=>{ %>
+      <tbody>
+        <td><%= index %></td>
+        <td><%= student.full_name %></td>
+        <td><% if (student.students_subject.score != null) { %>
+          <%= student.students_subject.score %>
+        <% } else { %>
+          <a href="/subjects/<%= student.students_subject.subjectId %>/givescore/<%= student.id %>">Give Score</a>
+        <% } %></td>
+      </tbody>
+      <% index++ }) %>
+    </table>
+  </body>
+</html>

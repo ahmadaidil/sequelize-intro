@@ -3,7 +3,7 @@ const router = express.Router();
 const model = require('../models')
 
 router.get('/', (req, res)=>{
-  model.teacher.findAll({order: [['id', 'ASC']]})
+  model.teacher.findAll({order: [['first_name', 'ASC']]})
     .then(teachers=>{
       //res.render('teachers', {data:teachers});
       let promises = teachers.map(teacher=>{
@@ -49,7 +49,13 @@ router.post('/add', (req, res)=>{
   }).then(task=>{
     res.redirect('/teachers');
   }).catch(err=>{
-    res.render('add-teacher', {err:err});
+    model.subject.findAll()
+      .then(subjects=>{
+        res.render('add-teacher', {dataSubjects:subjects,err:err, errmsg:'Email is already used'});
+      })
+      .catch(err=>{
+        res.send(err.toString());
+      })
   })
 });
 
