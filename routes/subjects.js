@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const model = require('../models');
 const letterScore = require('../helpers/letterScore');
+const session = require('express-session');
 
 router.get('/', (req, res)=>{
   model.subject.findAll({order: [['id', 'ASC']]})
@@ -22,7 +23,7 @@ router.get('/', (req, res)=>{
       })
       Promise.all(promises)
         .then(subjects=>{
-          res.render('subjects', {data:subjects, title:'All Subjects Data'});
+          res.render('subjects', {data:subjects, title:'All Subjects Data', user:req.session.user});
         })
         .catch(err=>{
           res.send(err.toString());

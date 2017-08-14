@@ -1,0 +1,8 @@
+<%- include layout/head %>
+    <form action="/login" method="post">
+        <input type="text" name="username" placeholder="username"><br>
+        <input type="password" name="password" placeholder="password"><br><br>
+        <button type="submit">login</button>
+    </form><br><br>
+    <%= errmsg %>
+<%- include layout/foot %>

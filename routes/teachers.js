@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const model = require('../models')
+const model = require('../models');
+const session = require('express-session');
 
 router.get('/', (req, res)=>{
   model.teacher.findAll({order: [['first_name', 'ASC']]})
@@ -19,7 +20,7 @@ router.get('/', (req, res)=>{
       })
       Promise.all(promises)
         .then(teachers=>{
-          res.render('teachers', {data: teachers, title:'All Teachers Data'});
+          res.render('teachers', {data: teachers, title:'All Teachers Data', user:req.session.user});
         })
         .catch(err=>{
           res.send(err.toString());

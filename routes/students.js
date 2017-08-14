@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const model = require('../models')
+const model = require('../models');
+const session = require('express-session');
 
 router.get('/', (req, res)=>{
   model.student.findAll({order: [['first_name', 'ASC']]})
     .then(students=>{
-      res.render('students', {data:students, title:'All Students Data'});
+      res.render('students', {data:students, title:'All Students Data', user:req.session.user});
     })
     .catch(err=>{
       res.send(err.toString());
@@ -54,9 +55,9 @@ router.post('/edit/:id', (req, res)=>{
 });
 
 router.get('/delete/:id', (req, res)=>{
-  model.Student.destroy({
+  model.student.destroy({
     where:{id:req.params.id}
-  }).then(task=>{
+  }).then(()=>{
     res.redirect('/students')
   }).catch(err=>{
     res.send(err.toString());

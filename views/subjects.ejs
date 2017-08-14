@@ -1,25 +1,29 @@
 <%- include layout/head %>
-    <a href="/subjects/add">Add subject</a><br><br>
-    <table border="1">
-      <thead>
-        <th>Subject Id</th>
-        <th>Subject Name</th>
-        <th>Teachers</th>
-        <th colspan="3">Actions</th>
-      </thead>
-      <% data.forEach(d=>{ %>
-      <tbody>
-        <td><%= d.id %></td>
-        <td><%= d.subject_name %></td>
-        <td><ol>
-          <% d.teachers.forEach(dT=>{ %>
-          <li><%= `${dT.first_name} ${dT.last_name}` %></li>
-          <% }) %>
-        </ol></td>
-        <td><a href="/subjects/<%= d.id %>/enrolledstudents">Enrolled Students</a></td>
-        <td><a href="/subjects/edit/<%= d.id %>">Edit</a></td>
-        <td><a href="/subjects/delete/<%= d.id %>">Delete</a></td>
-      </tbody>
-      <% }) %>
-    </table>
+    <% if(user.role == 'academic' || user.role == 'headmaster'){ %>
+      <a href="/subjects/add">Add subject</a><br><br>
+      <table border="1">
+        <thead>
+          <th>Subject Id</th>
+          <th>Subject Name</th>
+          <th>Teachers</th>
+          <th colspan="3">Actions</th>
+        </thead>
+        <% data.forEach(d=>{ %>
+        <tbody>
+          <td><%= d.id %></td>
+          <td><%= d.subject_name %></td>
+          <td><ol>
+            <% d.teachers.forEach(dT=>{ %>
+            <li><%= `${dT.first_name} ${dT.last_name}` %></li>
+            <% }) %>
+          </ol></td>
+          <td><a href="/subjects/<%= d.id %>/enrolledstudents">Enrolled Students</a></td>
+          <td><a href="/subjects/edit/<%= d.id %>">Edit</a></td>
+          <td><a href="/subjects/delete/<%= d.id %>">Delete</a></td>
+        </tbody>
+        <% }) %>
+      </table>
+    <% }else{ %>
+      <h2>Sorry, you don't have permission to access this page</h2>
+    <% } %>
 <%- include layout/foot %>
