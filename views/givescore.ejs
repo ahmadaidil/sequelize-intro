@@ -1,6 +1,10 @@
 <%- include layout/head %>
+  <% if(user.role == 'academic' || user.role == 'headmaster'){ %>
     <form class="" action="/subjects/<%= subjectId %>/givescore/<%= student.id %>" method="post">
       <input type="number" name="score" placeholder="Score (0-100)" min="0" max="100"><br><br>
       <input type="submit" name="" value="Submit score">
     </form>
+  <% }else{ %>
+    <h2>Sorry, you don't have permission to access this page</h2>
+  <% } %>
 <%- include layout/foot %>

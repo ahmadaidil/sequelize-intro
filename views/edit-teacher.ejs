@@ -1,4 +1,5 @@
 <%- include layout/head %>
+  <% if(user.role == 'headmaster'){ %>
     <form class="" action="/teachers/edit/<%= dataTeacher.id %>" method="post">
       <input type="text" name="first_name" placeholder="First Name" value="<%= dataTeacher.first_name %>"><br>
       <input type="text" name="last_name" placeholder="Last Name" value="<%= dataTeacher.last_name %>"><br>
@@ -13,4 +14,7 @@
       </select><br><br>
       <input type="submit" name="Submit" value="Submit">
     </form>
+  <% }else{ %>
+    <h2>Sorry, you don't have permission to access this page</h2>
+  <% } %>
 <%- include layout/foot %>

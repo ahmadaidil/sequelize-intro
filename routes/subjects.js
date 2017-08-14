@@ -35,7 +35,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/add', (req, res)=>{
-  res.render('add-subject', {title:'Add New Subject'});
+  res.render('add-subject', {title:'Add New Subject', user:req.session.user});
 });
 
 router.post('/add', (req, res)=>{
@@ -53,7 +53,7 @@ router.post('/add', (req, res)=>{
 router.get('/edit/:id', (req, res)=>{
   model.subject.findById(req.params.id)
     .then(subject=>{
-      res.render('edit-subject', {subject:subject, title:`Edit Subject ${subject.subject_name}`});
+      res.render('edit-subject', {subject:subject, title:`Edit Subject ${subject.subject_name}`, user:req.session.user});
     })
     .catch(err=>{
       res.send(err.toString());
@@ -73,13 +73,17 @@ router.post('/edit/:id', (req, res)=>{
 });
 
 router.get('/delete/:id', (req, res)=>{
-  model.subject.destroy({
-    where:{id:req.params.id}
-  }).then(task=>{
-    res.redirect('/subjects')
-  }).catch(err=>{
-    res.send(err.toString());
-  });
+  if(req.session.user.role == 'academic' || req.session.user.role == 'headmaster'){
+    model.subject.destroy({
+      where:{id:req.params.id}
+    }).then(task=>{
+      res.redirect('/subjects')
+    }).catch(err=>{
+      res.send(err.toString());
+    });
+  }else{
+    res.redirect('/subjects');
+  }
 })
 
 router.get('/:id/enrolledstudents', (req, res)=>{
@@ -90,7 +94,7 @@ router.get('/:id/enrolledstudents', (req, res)=>{
           students.forEach(s=>{
             s['letterScore'] = letterScore(s.students_subject.score);
           })
-          res.render('enroll-students', {subject:subject, students:students, title:`${subject.subject_name}`});
+          res.render('enroll-students', {subject:subject, students:students, title:`${subject.subject_name}`, user:req.session.user});
         })
         .catch(err=>{
           res.send(err.toString());
@@ -104,7 +108,7 @@ router.get('/:id/enrolledstudents', (req, res)=>{
 router.get('/:subjectId/givescore/:studentId', (req, res) => {
   model.student.findById(req.params.studentId)
   .then(student=>{
-    res.render('givescore', {student: student, title:`Score for ${student.full_name}`, subjectId: req.params.subjectId})
+    res.render('givescore', {student: student, title:`Score for ${student.full_name}`, subjectId: req.params.subjectId, user:req.session.user})
   })
   .catch(err=>{
     res.send(err.toString());

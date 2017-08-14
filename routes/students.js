@@ -14,7 +14,7 @@ router.get('/', (req, res)=>{
 });
 
 router.get('/add', (req, res)=>{
-  res.render('add-student', {err:false, title:'Add New Student'});
+  res.render('add-student', {err:false, title:'Add New Student', user:req.session.user});
 });
 
 router.post('/add', (req, res)=>{
@@ -33,7 +33,7 @@ router.post('/add', (req, res)=>{
 router.get('/edit/:id', (req, res)=>{
   model.student.findById(req.params.id)
     .then(student=>{
-      res.render('edit-student', {dS:student, title:'Edit Student Data'});
+      res.render('edit-student', {dS:student, title:'Edit Student Data', user:req.session.user});
     })
     .catch(err=>{
       res.send(err.toString());
@@ -69,7 +69,7 @@ router.get('/:id/addsubject', (req, res)=>{
     .then(student=>{
       model.subject.findAll()
         .then(subjects=>{
-          res.render('add-studentSubject', {dataStudent:student, dataSS:subjects, title:`Add New Subject to ${student.full_name}`});
+          res.render('add-studentSubject', {dataStudent:student, dataSS:subjects, title:`Add New Subject to ${student.full_name}`, user:req.session.user});
         })
         .catch(err=>{
           res.send(err.toString());

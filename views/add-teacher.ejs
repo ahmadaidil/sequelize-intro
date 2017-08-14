@@ -1,16 +1,20 @@
 <%- include layout/head %>
+  <% if(user.role == 'headmaster'){ %>
     <% if(err){ %>
-    <h4 style="color:red"><%= `${errmsg}! (${err.toString()})` %></h4>
-    <% } %>
-    <form class="" action="/teachers/add" method="post">
-      <input type="text" name="first_name" placeholder="First Name"><br>
-      <input type="text" name="last_name" placeholder="Last Name"><br>
-      <input type="text" name="email" placeholder="Email"><br>
-      <select name="subjectId">
-        <% dataSubjects.forEach(dS=>{ %>
-        <option value="<%=dS.id%>"><%=dS.subject_name%></option>
-        <% }) %>
-      </select><br><br>
-      <input type="submit" name="Submit" value="Submit">
-    </form>
+      <h4 style="color:red"><%= `${errmsg}! (${err.toString()})` %></h4>
+      <% } %>
+      <form class="" action="/teachers/add" method="post">
+        <input type="text" name="first_name" placeholder="First Name"><br>
+        <input type="text" name="last_name" placeholder="Last Name"><br>
+        <input type="text" name="email" placeholder="Email"><br>
+        <select name="subjectId">
+          <% dataSubjects.forEach(dS=>{ %>
+          <option value="<%=dS.id%>"><%=dS.subject_name%></option>
+          <% }) %>
+        </select><br><br>
+        <input type="submit" name="Submit" value="Submit">
+      </form>
+  <% }else{ %>
+    <h2>Sorry, you don't have permission to access this page</h2>
+  <% } %>
 <%- include layout/foot %>

@@ -34,7 +34,7 @@ router.get('/', (req, res)=>{
 router.get('/add', (req, res)=>{
   model.subject.findAll()
     .then(subjects=>{
-      res.render('add-teacher', {err:false, dataSubjects:subjects, title:'Add New Teacher'});
+      res.render('add-teacher', {err:false, dataSubjects:subjects, title:'Add New Teacher', user:req.session.user});
     })
     .catch(err=>{
       res.send(err.toString());
@@ -65,7 +65,7 @@ router.get('/edit/:id', (req, res)=>{
     .then(teacher=>{
       model.subject.findAll()
         .then(subjects=>{
-          res.render('edit-teacher', {dataTeacher:teacher, dataSubjects:subjects, title:'Edit Teacher Data'});
+          res.render('edit-teacher', {dataTeacher:teacher, dataSubjects:subjects, title:'Edit Teacher Data', user:req.session.user});
         })
         .catch(err=>{
           res.send(err.toString());
@@ -92,13 +92,17 @@ router.post('/edit/:id', (req, res)=>{
 });
 
 router.get('/delete/:id', (req, res)=>{
-  model.teacher.destroy({
-    where:{id:req.params.id}
-  }).then(task=>{
+  if(req.session.user.role == 'headmaster'){
+    model.teacher.destroy({
+      where:{id:req.params.id}
+    }).then(task=>{
+      res.redirect('/teachers')
+    }).catch(err=>{
+      res.send(err.toString());
+    });
+  }else{
     res.redirect('/teachers')
-  }).catch(err=>{
-    res.send(err.toString());
-  });
+  }
 });
 
 module.exports = router;

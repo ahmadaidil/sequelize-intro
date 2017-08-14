@@ -1,6 +1,10 @@
 <%- include layout/head %>
+  <% if(user.role == 'academic' || user.role == 'headmaster'){ %>
     <form class="" action="/subjects/edit/<%=subject.id%>" method="post">
       <input type="text" name="subject_name" placeholder="Subject Name" value="<%= subject.subject_name %>"><br><br>
       <input type="submit" name="Submit" value="Submit">
     </form>
+  <% }else{ %>
+    <h2>Sorry, you don't have permission to access this page</h2>
+  <% } %>
 <%- include layout/foot %>
