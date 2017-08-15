@@ -37,6 +37,6 @@ app.use('/subjects', routeSubjects);
 app.use('/students', routeStudents);
 app.use('/users', routeUsers);
 
-app.listen(3000, ()=>{
+app.listen(process.env.PORT || 3000, ()=>{
   console.log('listening port 3k LOL');
 })
