@@ -106,13 +106,19 @@ router.get('/:id/enrolledstudents', (req, res)=>{
 });
 
 router.get('/:subjectId/givescore/:studentId', (req, res) => {
-  model.student.findById(req.params.studentId)
-  .then(student=>{
-    res.render('givescore', {student: student, title:`Score for ${student.full_name}`, subjectId: req.params.subjectId, user:req.session.user})
-  })
-  .catch(err=>{
-    res.send(err.toString());
-  })
+  model.subject.findById(req.params.subjectId)
+    .then(subject=>{
+      model.student.findById(req.params.studentId)
+      .then(student=>{
+        res.render('givescore', {subject:subject, student: student, title:`Score ${subject.subject_name} for ${student.full_name}`, subjectId: req.params.subjectId, user:req.session.user})
+      })
+      .catch(err=>{
+        res.send(err.toString());
+      })
+    })
+    .catch(err=>{
+      res.send(err.toString())
+    })
 })
 
 router.post('/:subjectId/givescore/:studentId', (req, res) => {
