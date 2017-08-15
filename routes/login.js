@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const model = require('../models');
 const session = require('express-session');
+const hash = require('../helpers/hashPassword');
 
 let user = {username:'guest', role:'guest'};
 
@@ -9,14 +10,15 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/', (req, res)=>{
-    console.log('hahaha');
     //res.render('login', {title: req.body.username});
     model.user.findOne({
         where: {
             username: req.body.username
         }
     }).then(user=>{
-        if(user.password == req.body.password){
+        let realpass = hash(user.private_key, req.body.password);
+        //console.log(realpass);
+        if(realpass == user.password){
             req.session.user = {
                 username: user.username,
                 role: user.role
